@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.List;
 
 public class ServidorUDP {
 
@@ -38,14 +39,13 @@ public class ServidorUDP {
                 String resposta = "";
 
                 opcaoMenu = Integer.parseInt(separadorMensagem[0].trim());
-                System.out.println("OPCAO MENU ===" + opcaoMenu);
+                
                 nomeUsuario = Integer.parseInt(separadorMensagem[1].trim());
-                System.out.println("ind usuario ===" + nomeUsuario);
 
                 switch (opcaoMenu) {
                     case 1:
-                        resposta = bd.solicitarFilme(nomeUsuario);
-                        break; 
+                        resposta = String.valueOf(bd.solicitarFilme(nomeUsuario));
+                        break;
                     case 2:
                         nomeFilme = Integer.parseInt(separadorMensagem[2].trim());
                         System.out.println("filme  ===" + nomeFilme);
@@ -57,11 +57,11 @@ public class ServidorUDP {
                         resposta = String.valueOf(resp);
                         break;
                     case 3:
-                        resposta = bd.recomendar(nomeUsuario);
+                        resposta = String.valueOf(bd.recomendar(nomeUsuario));
                         break;
                     case 4:
-                        bd.listarAvaliacoes(nomeUsuario);
-                        resposta = bd.le();
+                        List<Integer> filmesAvaliados = bd.listarAvaliacoes(nomeUsuario);
+                        resposta = filmesAvaliados.toString();
                         break;
 
                 }

@@ -5,9 +5,13 @@
 package usuarioudp;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 public class FormularioUsuario extends javax.swing.JFrame {
+
+    private ArrayList resposta = null;
 
     public FormularioUsuario() {
         initComponents();
@@ -141,7 +145,7 @@ public class FormularioUsuario extends javax.swing.JFrame {
 
         jLabel2.setText("Filmes/Séries");
 
-        cmbTitulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tempos Modernos", "Star Wars", "Friends", "Ratatouille", "Modern Family", "Carros", "Rio 2", "Esquadrão Classe A", "Rei Leão", "O Poderoso Chefão", "A Origem", "Jurassic Park", "Titanic", "Breaking Bad", "Game of Thrones" }));
+        cmbTitulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tempos Modernos", "Star Wars" }));
 
         jLabel3.setText("Nota");
 
@@ -198,7 +202,7 @@ public class FormularioUsuario extends javax.swing.JFrame {
         getContentPane().add(jPanelAvaliar);
         jPanelAvaliar.setBounds(60, 510, 360, 170);
 
-        nomeUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lucas", "Mariana", "Zé", "Martha", "Ana", "Ricardo", "Fernanda", "Gabriel", "Miguel", "Flavia" }));
+        nomeUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Zé", "Ana", "Martha" }));
         getContentPane().add(nomeUsuario);
         nomeUsuario.setBounds(120, 30, 270, 22);
 
@@ -207,7 +211,7 @@ public class FormularioUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void naoAvaliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_naoAvaliadoActionPerformed
-        
+
         jPanelMostrarResposta.setVisible(true);
         jPanelAvaliar.setVisible(false);
 
@@ -247,31 +251,41 @@ public class FormularioUsuario extends javax.swing.JFrame {
             if (naoAvaliado.isSelected() || avaliados.isSelected() || recomendacoes.isSelected()) {
 
                 if (naoAvaliado.isSelected()) {
-
                     msg = "1;" + indexNome;
-                    jPanelMostrarResposta.setName("Sem Avaliação");
 
                 } else if (recomendacoes.isSelected()) {
-
                     msg = "3;" + indexNome;
-                    jPanelMostrarResposta.setName("Recomendados");
 
                 } else {
-
                     msg = "4;" + indexNome;
-                    jPanelMostrarResposta.setName("Avaliados");
 
                 }
             } else {
-                
+
                 msg = "2;" + indexNome + ";" + cmbTitulo.getSelectedIndex() + ";" + nota.getValue();
+                JOptionPane.showMessageDialog(null, "Avaliado com sucesso!.");
+
             }
 
             Usuario usuario = new Usuario();
             String resposta = usuario.enviaMensagem(msg);
-            JOptionPane.showMessageDialog(null, "Avalido com sucesso!.");
+            areaResposta.setText("");
 
-            areaResposta.setText(resposta);
+            String[] indices = resposta.replaceAll("[\\[\\]]", "").split(",");
+
+            // Adapte este mapeamento conforme a sua implementação
+
+            StringBuilder textoResposta = new StringBuilder();
+            for (String indice : indices) {
+                int index = Integer.parseInt(indice.trim());
+                if (index >= 0 && index < cmbTitulo.getItemCount()) {
+                    textoResposta.append(cmbTitulo.getItemAt(index)).append("\n");
+                }
+            }
+
+            // Atualize a área de resposta com os nomes dos filmes
+            areaResposta.setText(textoResposta.toString());
+
             naoAvaliado.setSelected(false);
             avaliar.setSelected(false);
             recomendacoes.setSelected(false);
@@ -283,7 +297,7 @@ public class FormularioUsuario extends javax.swing.JFrame {
 
         int indexNome = nomeUsuario.getSelectedIndex();
         verificarSeNomeSelecionado(indexNome);
-        
+
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnEnviarAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarAvaliacaoActionPerformed

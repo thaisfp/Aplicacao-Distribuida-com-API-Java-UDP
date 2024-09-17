@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ServidorUDP/ServidorUDP.iml" filepath="$PROJECT_DIR$/ServidorUDP/ServidorUDP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Usando API Java UDP.iml" filepath="$PROJECT_DIR$/.idea/Usando API Java UDP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UsuarioUDP/UsuarioUDP.iml" filepath="$PROJECT_DIR$/UsuarioUDP/UsuarioUDP.iml" />
+    </modules>
+  </component>
+</project>
