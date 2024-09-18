@@ -5,6 +5,7 @@
 package usuarioudp;
 
 import java.awt.Color;
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
@@ -145,7 +146,7 @@ public class FormularioUsuario extends javax.swing.JFrame {
 
         jLabel2.setText("Filmes/Séries");
 
-        cmbTitulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tempos Modernos", "Star Wars" }));
+        cmbTitulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tempos Modernos", "Star Wars", "Friends", "Ratatouille", "Modern Family" }));
 
         jLabel3.setText("Nota");
 
@@ -196,13 +197,13 @@ public class FormularioUsuario extends javax.swing.JFrame {
                     .addComponent(nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnEnviarAvaliacao)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelAvaliar);
-        jPanelAvaliar.setBounds(60, 510, 360, 170);
+        jPanelAvaliar.setBounds(60, 510, 360, 180);
 
-        nomeUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Zé", "Ana", "Martha" }));
+        nomeUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Zé", "Martha", "Ana", "Ricardo", "Fernanda", " " }));
         getContentPane().add(nomeUsuario);
         nomeUsuario.setBounds(120, 30, 270, 22);
 
@@ -211,7 +212,7 @@ public class FormularioUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void naoAvaliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_naoAvaliadoActionPerformed
-
+        areaResposta.setText("");
         jPanelMostrarResposta.setVisible(true);
         jPanelAvaliar.setVisible(false);
 
@@ -226,18 +227,22 @@ public class FormularioUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_avaliarActionPerformed
 
     private void recomendacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recomendacoesActionPerformed
+        areaResposta.setText("");
         jPanelMostrarResposta.setVisible(true);
         jPanelAvaliar.setVisible(false);
 
     }//GEN-LAST:event_recomendacoesActionPerformed
 
     private void avaliadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliadosActionPerformed
+        areaResposta.setText("");
         jPanelMostrarResposta.setVisible(true);
         jPanelAvaliar.setVisible(false);
 
     }//GEN-LAST:event_avaliadosActionPerformed
 
-    private void verificarSeNomeSelecionado(int indexNome) {
+    private void SelecionarOpcao() {
+
+        int indexNome = nomeUsuario.getSelectedIndex();
 
         String msg = null;
 
@@ -269,22 +274,8 @@ public class FormularioUsuario extends javax.swing.JFrame {
 
             Usuario usuario = new Usuario();
             String resposta = usuario.enviaMensagem(msg);
-            areaResposta.setText("");
 
-            String[] indices = resposta.replaceAll("[\\[\\]]", "").split(",");
-
-            // Adapte este mapeamento conforme a sua implementação
-
-            StringBuilder textoResposta = new StringBuilder();
-            for (String indice : indices) {
-                int index = Integer.parseInt(indice.trim());
-                if (index >= 0 && index < cmbTitulo.getItemCount()) {
-                    textoResposta.append(cmbTitulo.getItemAt(index)).append("\n");
-                }
-            }
-
-            // Atualize a área de resposta com os nomes dos filmes
-            areaResposta.setText(textoResposta.toString());
+            converterResposta(resposta);
 
             naoAvaliado.setSelected(false);
             avaliar.setSelected(false);
@@ -293,17 +284,31 @@ public class FormularioUsuario extends javax.swing.JFrame {
         }
     }
 
+    private void converterResposta(String resposta) {
+
+        String[] indices = resposta.replaceAll("[\\[\\]]", "").split(",");
+
+        StringBuilder textoResposta = new StringBuilder();
+        for (String indice : indices) {
+            int index = Integer.parseInt(indice.trim());
+            if (index >= 0 && index < cmbTitulo.getItemCount()) {
+                textoResposta.append(cmbTitulo.getItemAt(index)).append("\n");
+            }
+        }
+
+        areaResposta.setText(textoResposta.toString());
+
+    }
+
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
 
-        int indexNome = nomeUsuario.getSelectedIndex();
-        verificarSeNomeSelecionado(indexNome);
+        SelecionarOpcao();
 
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnEnviarAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarAvaliacaoActionPerformed
 
-        int indexNome = nomeUsuario.getSelectedIndex();
-        verificarSeNomeSelecionado(indexNome);
+        SelecionarOpcao();
 
     }//GEN-LAST:event_btnEnviarAvaliacaoActionPerformed
 

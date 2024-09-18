@@ -9,8 +9,8 @@ import java.util.List;
 
 public class BaseDeDados {
 
-    private int qtdFilmes = 2;
-    private int qtdCliente = 3;
+    private int qtdFilmes = 5;
+    private int qtdCliente = 5;
 
     private ArrayList lista = null;
     private int matriz[][] = null;
@@ -27,21 +27,10 @@ public class BaseDeDados {
             System.out.println("\n");
         }
     }
-//
-//    public String le() {
-//        String s = "";
-//        int fim = lista.size();
-//
-//        for (int pos = 0; pos < fim; pos++) {
-//            s = s + lista.get(pos) + ";";
-//        }
-//
-//        return s;
-//    }
 
-    public int solicitarFilme(int cliente) {
+    public int semAvaliacao(int cliente) {
 
-        int filme = 0;
+        int filme = -1;
         for (int i = 0; i < qtdFilmes; i++) {
             if (matriz[cliente][i] == 0) {
                 filme = i;
@@ -84,7 +73,6 @@ public class BaseDeDados {
                 if (distEuclidiana < menorDistancia) {
                     menorDistancia = distEuclidiana;
                     clienteProximo = i;
-                    System.out.println(clienteProximo + " esta mais próximo de " + cliente);
                 }
             }
         }
@@ -93,11 +81,13 @@ public class BaseDeDados {
             if (matriz[clienteProximo][i] != 0 && matriz[cliente][i] == 0) {
                 filmeRecomendado = i;
                 System.out.println("FILME RECOMENDADO = " + filmeRecomendado);
-                break; 
+                break;
             }
         }
-
+        
+        System.out.println(clienteProximo + " esta mais proximo de " + cliente);
         System.out.println("MENOR DISTANCIA = " + menorDistancia);
+        
         return filmeRecomendado;
     }
 

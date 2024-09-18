@@ -30,37 +30,33 @@ public class ServidorUDP {
                 aSocket.receive(request);
 
                 String mensagem = new String(request.getData());
-                System.out.println("MENSGAEM ===== " + mensagem);
 
                 String separadorMensagem[] = mensagem.split(";");
-                System.out.println("SEPARADOR ===== " + separadorMensagem);
 
-                int opcaoMenu, nomeUsuario, nomeFilme, nota, resp = 0;
+                int opcaoMenu, indiceNome, indiceFilme, nota, resp = 0;
                 String resposta = "";
 
                 opcaoMenu = Integer.parseInt(separadorMensagem[0].trim());
                 
-                nomeUsuario = Integer.parseInt(separadorMensagem[1].trim());
+                indiceNome = Integer.parseInt(separadorMensagem[1].trim());
 
                 switch (opcaoMenu) {
                     case 1:
-                        resposta = String.valueOf(bd.solicitarFilme(nomeUsuario));
+                        resposta = String.valueOf(bd.semAvaliacao(indiceNome));
                         break;
                     case 2:
-                        nomeFilme = Integer.parseInt(separadorMensagem[2].trim());
-                        System.out.println("filme  ===" + nomeFilme);
+                        indiceFilme = Integer.parseInt(separadorMensagem[2].trim());
 
                         nota = Integer.parseInt(separadorMensagem[3].trim());
-                        System.out.println("nota ===" + nota);
 
-                        bd.avaliar(nomeUsuario, nomeFilme, nota);
+                        bd.avaliar(indiceNome, indiceFilme, nota);
                         resposta = String.valueOf(resp);
                         break;
                     case 3:
-                        resposta = String.valueOf(bd.recomendar(nomeUsuario));
+                        resposta = String.valueOf(bd.recomendar(indiceNome));
                         break;
                     case 4:
-                        List<Integer> filmesAvaliados = bd.listarAvaliacoes(nomeUsuario);
+                        List<Integer> filmesAvaliados = bd.listarAvaliacoes(indiceNome);
                         resposta = filmesAvaliados.toString();
                         break;
 
